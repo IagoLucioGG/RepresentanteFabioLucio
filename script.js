@@ -1,4 +1,4 @@
-// Dados dos Catálogos - Foco em Vendas
+// Dados dos Catálogos - Foco em Vendas (PDFs convertidos para HTML com PDF.js)
 const catalogos = {
     "textil": [
         {
@@ -410,12 +410,12 @@ function openPdfViewer(arquivo, nome) {
         // Para mobile: mostrar confirmação e baixar diretamente
         showMobileConfirmation(arquivo, nome);
     } else {
-        // Para desktop: converter PDF para HTML
+        // Para desktop: converter PDF para HTML com paginação
         convertPdfToHtml(arquivo, nome);
     }
 }
 
-// Nova função para converter PDF para HTML usando PDF.js
+// Função para converter PDF para HTML usando PDF.js com paginação
 async function convertPdfToHtml(arquivo, nome) {
     try {
         // Mostrar modal com loading
@@ -424,6 +424,9 @@ async function convertPdfToHtml(arquivo, nome) {
         
         // Limpar canvas anterior
         pdfCanvas.innerHTML = '';
+        
+        // Mostrar controles de paginação
+        pdfControls.style.display = 'flex';
         
         // Mostrar loading
         pdfCanvas.innerHTML = `
@@ -458,7 +461,21 @@ async function convertPdfToHtml(arquivo, nome) {
 async function renderPdfPage(pageNum) {
     try {
         const page = await currentPdf.getPage(pageNum);
-        const viewport = page.getViewport({ scale: 1.5 });
+        
+        // Calcular escala baseada no tamanho disponível do modal
+        const containerWidth = pdfCanvas.clientWidth - 32; // 32px de padding
+        const containerHeight = pdfCanvas.clientHeight - 32;
+        
+        // Obter viewport original
+        const originalViewport = page.getViewport({ scale: 1.0 });
+        
+        // Calcular escala para caber no container
+        const scaleX = containerWidth / originalViewport.width;
+        const scaleY = containerHeight / originalViewport.height;
+        const scale = Math.min(scaleX, scaleY, 2.0); // Máximo 2x de zoom
+        
+        // Criar viewport com escala calculada
+        const viewport = page.getViewport({ scale: scale });
         
         // Criar canvas
         const canvas = document.createElement('canvas');
@@ -524,8 +541,46 @@ function setupPdfControls(arquivo) {
         }
     });
     
+    // Adicionar listener para redimensionamento da janela
+    const resizeHandler = debounce(async () => {
+        if (currentPdf && pdfModal.style.display === 'block') {
+            await renderPdfPage(currentPage);
+        }
+    }, 250);
+    
+    window.addEventListener('resize', resizeHandler);
+    
+    // Armazenar referência para poder remover depois
+    window.pdfResizeHandler = resizeHandler;
+    
     // Atualizar botão de download
     downloadBtn.onclick = () => downloadPdfDirect(arquivo);
+}
+
+// Função debounce para otimizar redimensionamento
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Função de erro para PDF
+function showPdfError(arquivo, nome) {
+    pdfCanvas.innerHTML = `
+        <div class="pdf-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Erro ao carregar o PDF "${nome}"</p>
+            <button onclick="window.open('${arquivo}', '_blank')" class="pdf-btn" style="margin-top: 1rem;">
+                Abrir em Nova Aba
+            </button>
+        </div>
+    `;
 }
 
 function showMobileConfirmation(arquivo, nome) {
@@ -845,6 +900,12 @@ function hideModal() {
     const loading = document.getElementById('pdfLoading');
     if (loading) {
         loading.remove();
+    }
+    
+    // Remover listener de redimensionamento
+    if (window.pdfResizeHandler) {
+        window.removeEventListener('resize', window.pdfResizeHandler);
+        window.pdfResizeHandler = null;
     }
     
     // Remover mensagem de erro se existir
