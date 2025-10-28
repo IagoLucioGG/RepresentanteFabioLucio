@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Catálogos Fábio Lúcio - Encontre o Produto Ideal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-shopping-cart"></i>
+                <div class="logo-text">
+                    <h1>Fábio Lúcio</h1>
+                    <span>Representante Comercial</span>
+                </div>
+            </div>
+            <div class="header-cta">
+                <a href="https://wa.me/5521970777387?text=Olá%20Fábio!%20Gostaria%20de%20mais%20informações%20sobre%20os%20produtos." target="_blank" class="cta-button">
+                    <i class="fab fa-whatsapp"></i>
+                    Falar com Fábio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Encontre o Produto Perfeito para Seu Negócio</h2>
+                    <p>Mais de <strong>20 catálogos</strong> com produtos de alta qualidade. Navegue, visualize e encontre exatamente o que você precisa.</p>
+                    <div class="hero-cta">
+                        <button class="btn-primary" onclick="scrollToCatalogos()">
+                            <i class="fas fa-search"></i>
+                            Explorar Catálogos
+                        </button>
+                        <a href="https://wa.me/5521970777387?text=Olá%20Fábio!%20Preciso%20de%20ajuda%20para%20encontrar%20o%20produto%20ideal." target="_blank" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            Consultoria Gratuita
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="product-showcase">
+                        <i class="fas fa-box-open"></i>
+                        <div class="floating-elements">
+                            <div class="element element-1"><i class="fas fa-tools"></i></div>
+                            <div class="element element-2"><i class="fas fa-tshirt"></i></div>
+                            <div class="element element-3"><i class="fas fa-bolt"></i></div>
+                            <div class="element element-4"><i class="fas fa-swimming-pool"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtros e Busca -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-content">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar produtos específicos...">
+                    <button class="search-btn">Buscar</button>
+                </div>
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">
+                        <i class="fas fa-th-large"></i>
+                        Todos
+                    </button>
+                    <button class="filter-btn" data-category="textil">
+                        <i class="fas fa-tshirt"></i>
+                        Têxtil
+                    </button>
+                    <button class="filter-btn" data-category="eletro">
+                        <i class="fas fa-bolt"></i>
+                        Eletro
+                    </button>
+                    <button class="filter-btn" data-category="esportes">
+                        <i class="fas fa-swimming-pool"></i>
+                        Esportes
+                    </button>
+                    <button class="filter-btn" data-category="ferramentas">
+                        <i class="fas fa-tools"></i>
+                        Ferramentas
+                    </button>
+                    <button class="filter-btn" data-category="outros">
+                        <i class="fas fa-box"></i>
+                        Outros
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Fixo de Categorias -->
+    <div class="sticky-categories" id="stickyCategories">
+        <div class="container">
+            <div class="sticky-filters">
+                <button class="sticky-filter-btn active" data-category="all">
+                    <i class="fas fa-th-large"></i>
+                    Todos
+                </button>
+                <button class="sticky-filter-btn" data-category="textil">
+                    <i class="fas fa-tshirt"></i>
+                    Têxtil
+                </button>
+                <button class="sticky-filter-btn" data-category="eletro">
+                    <i class="fas fa-bolt"></i>
+                    Eletro
+                </button>
+                <button class="sticky-filter-btn" data-category="esportes">
+                    <i class="fas fa-swimming-pool"></i>
+                    Esportes
+                </button>
+                <button class="sticky-filter-btn" data-category="ferramentas">
+                    <i class="fas fa-tools"></i>
+                    Ferramentas
+                </button>
+                <button class="sticky-filter-btn" data-category="outros">
+                    <i class="fas fa-box"></i>
+                    Outros
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Catálogos Grid -->
+    <section class="catalogos-section" id="catalogosSection">
+        <div class="container">
+            <div class="section-header">
+                <h3>Nossos Catálogos</h3>
+                <p>Clique em qualquer catálogo para visualizar online</p>
+            </div>
+            <div class="catalogos-grid" id="catalogosGrid">
+                <!-- Catálogos serão inseridos aqui via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h3>Gostou de algum produto?</h3>
+                <p>Entre em contato agora mesmo e receba um atendimento personalizado!</p>
+                <a href="https://wa.me/5521970777387?text=Olá%20Fábio!%20Encontrei%20produtos%20interessantes%20nos%20catálogos%20e%20gostaria%20de%20mais%20informações." target="_blank" class="cta-main">
+                    <i class="fab fa-whatsapp"></i>
+                    Falar com Fábio Agora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal PDF Viewer -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Visualizando Catálogo</h3>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        Baixar PDF
+                    </button>
+                    <a href="https://wa.me/5521970777387?text=Olá%20Fábio!%20Estou%20visualizando%20o%20catálogo%20e%20gostaria%20de%20mais%20informações." target="_blank" class="btn-whatsapp-modal">
+                        <i class="fab fa-whatsapp"></i>
+                        Falar com Fábio
+                    </a>
+                    <button class="close-btn" id="closeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="pdf-viewer">
+                    <div id="pdfViewer" class="pdf-container">
+                        <div id="pdfCanvas" class="pdf-canvas"></div>
+                        <div id="pdfControls" class="pdf-controls">
+                            <button id="prevPage" class="pdf-btn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span id="pageInfo" class="page-info">Página 1 de 1</span>
+                            <button id="nextPage" class="pdf-btn" disabled>
+                                Próxima
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão WhatsApp Flutuante -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/5521970777387?text=Olá%20Fábio!%20Gostaria%20de%20mais%20informações%20sobre%20os%20produtos." target="_blank">
+            <div class="whatsapp-button">
+                <i class="fab fa-whatsapp"></i>
+                <span>Falar com Fábio</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Configurar PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
